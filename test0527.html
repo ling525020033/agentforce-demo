@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>企業資産およびサーバー稼働ステータスレポート</title>
+    <style>
+        body { font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; margin: 20px; line-height: 1.6; color: #333; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; margin-bottom: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f5f5f5; font-weight: bold; }
+        .status-ok { color: #2e7d32; font-weight: bold; }
+        .status-warn { color: #c62828; font-weight: bold; }
+        h1 { border-bottom: 2px solid #005caf; padding-bottom: 5px; color: #005caf; }
+        h2 { border-left: 5px solid #005caf; padding-left: 10px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>データセンターコア設備稼働状況レポート</h1>
+        <p><strong>確認日時:</strong> 2026年5月27日</p>
+        <p><strong>確認担当者:</strong> 運用管理部 シニアインフラエンジニア</p>
+    </header>
+
+    <hr>
+
+    <section id="server-status">
+        <h2>1. コアノード稼働ステータスサマリー</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ノード名 (Node)</th>
+                    <th>社内IPアドレス</th>
+                    <th>CPU使用率</th>
+                    <th>メモリ使用率</th>
+                    <th>現在の稼働ステータス</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Node-Alpha</td>
+                    <td>10.0.0.1</td>
+                    <td>45%</td>
+                    <td>60%</td>
+                    <td class="status-ok">正常 (Healthy)</td>
+                </tr>
+                <tr>
+                    <td>Node-Beta</td>
+                    <td>10.0.0.2</td>
+                    <td>92%</td>
+                    <td>88%</td>
+                    <td class="status-warn">警告 (高負荷)</td>
+                </tr>
+                <tr>
+                    <td>Node-Gamma</td>
+                    <td>10.0.0.3</td>
+                    <td>12%</td>
+                    <td>30%</td>
+                    <td class="status-ok">正常 (Idle)</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="sop-instructions">
+        <h2>2. 運用緊急対処手順 (SOP)</h2>
+        <p>システムから異常アラートが検知された場合、当番のエンジニアは以下の手順に従って速やかに対処すること：</p>
+        <ol>
+            <li><strong>自動スケーリングの条件：</strong>いずれかのノードのCPU使用率が5分間連続して<strong>90%</strong>を超えた場合（例：現在の Node-Beta がこの条件に該当）、システムは自動的にクラウドネイティブクラスターの拡張スクリプトを実行する。</li>
+            <li><strong>ネットワーク断の対処：</strong>ノードの通信断（Ping不通）が発生した場合は、対象ホストのハードウェア再起動を最優先で実行し、同時にネットワーク管理グループ（内線: 010-8888-8888）へ通知する。</li>
+            <li><strong>ログのアーカイブ：</strong>コア異常の処理が完了した後、関連するログは24小时以内に社内の Data Cloud へバックアップを保存する。</li>
+        </ol>
+    </section>
+
+    <footer>
+        <hr>
+        <p style="font-size: 11px; color: #777;">【社外秘】本ドキュメントは社内運用チームおよび AI Agent のデータ参照専用です。</p>
+    </footer>
+
+</body>
+</html>
